@@ -24,7 +24,8 @@ function requestLogger(req, res, next) {
       url: req.originalUrl,
       status: res.statusCode,
       duration_ms: duration,
-      ip: req.ip
+      ip: req.ip,
+      userId:req.userId||null
     });
   });
 
