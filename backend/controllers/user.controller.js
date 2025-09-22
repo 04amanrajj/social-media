@@ -92,6 +92,21 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.logoutUser = async (req, res) => {
+  try {
+    const token = req.token;
+    if (!token) {
+      return res.status(400).json({ message: "Token is required for logout" });
+    }
+    // Add the token to the blacklist
+    await db("token_blacklist").insert({ token, created_at: new Date() });
+
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.log({ error });
+    res.status(500).json({ message: error.message });
+  }
+};
 
 exports.getUserById = async (req, res) => {
   try {
