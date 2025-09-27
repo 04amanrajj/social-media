@@ -1,53 +1,85 @@
-# Social Media Backend
+# Social Media Backend API
 
-A Node.js and Express backend for a simple social media application. This project supports core features like user authentication, post management, and robust database storage. It's built to sharpen skills in modern full-stack development, including React, Node, Express, WebSockets, PostgreSQL, Bcrypt, JWT, Nodemailer, payment gateway, and Knex.js.
+This is a **Node.js** and **Express.js** backend API for a social media application. This project focuses on a set of core features to demonstrate proficiency in modern full-stack development.
 
----
-
-## Features
-
-- User authentication (register, login, logout with JWT + token blacklist)
-- Posts CRUD (create, read all, read by ID, update, delete)
-- Database integration using Knex.js
-- Error handling with proper status codes
-- Configurable via `.env`
+The API supports user authentication, post management, and robust database interactions. It is a foundational component designed to be integrated with a front-end application, such as one built with **React**.
 
 ---
 
-## Tech Stack
+## 🚀 Key Features
 
-- **Node.js**
-- **Express**
-- **Knex.js**
-- **PostgreSQL** (or MySQL)
-- **Nodemon** for development
+* **User Authentication & Authorization**: Secure user registration, login, and logout with **JSON Web Tokens (JWT)** and **Bcrypt** for password hashing. The API also supports third-party authentication via **OAuth 2.0**.
+* **Real-Time Communication**: Implements **WebSockets** using **Socket.IO** to enable features like real-time notifications or chat.
+* **Posts Management (CRUD)**: Complete functionality to **C**reate, **R**ead, **U**pdate, and **D**elete posts.
+* **Database Integration**: Seamlessly interacts with a **PostgreSQL** database using **Knex.js** as a SQL query builder.
+* **Robust Error Handling**: Provides clear, descriptive error messages with appropriate HTTP status codes to facilitate debugging.
+* **Architectural Pattern**: Follows the **Model-View-Controller (MVC)** pattern for a well-organized and scalable codebase.
+* **Environment Configuration**: Manages sensitive credentials and configurations securely using a `.env` file.
 
 ---
 
-## API Endpoints
+## 🛠️ Tech Stack
 
-**Posts**
+- **Backend:** [Node.js](https://nodejs.org/en/) & [Express.js](https://expressjs.com/)
+- **Database:** [PostgreSQL](https://www.postgresql.org/)
+- **Query Builder:** [Knex.js](https://knexjs.org/)
+- **Authentication:** [JSON Web Tokens (JWT)](https://jwt.io/), [Open Auth](https://oauth.net/2/) &  [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- **Development Tools:** [Nodemon](https://nodemon.io/)
+- **Architectural Pattern:** [Model-View-Controller](https://developer.mozilla.org/en-US/docs/Glossary/MVC)
+- **Other Libraries:** [Nodemailer](https://nodemailer.com/about/) for email services.
+- **Real-Time Communication:** [Socket.IO](https://socket.io/) for WebSockets
 
- - GET /posts → fetch all posts
+---
 
-GET /posts/:id → fetch single post by ID
+## 🌐 API Endpoints
 
-POST /posts → create a new post
+### User Authentication
 
-PUT /posts/:id → update a post
+| Method | Endpoint         | Description                        |
+| :----- | :--------------- | :--------------------------------- |
+| `POST` | `/auth/register` | Register a new user                |
+| `POST` | `/auth/login`    | Log in and receive an access token |
+| `POST` | `/auth/logout`   | Log out (invalidates the token)    |
 
-DELETE /posts/:id → delete a post
+### Posts Management
 
-Auth
+| Method   | Endpoint     | Description                    |
+| :------- | :----------- | :----------------------------- |
+| `GET`    | `/posts`     | Retrieve a list of all posts   |
+| `GET`    | `/posts/:id` | Retrieve a specific post by ID |
+| `POST`   | `/posts`     | Create a new post              |
+| `PUT`    | `/posts/:id` | Update an existing post by ID  |
+| `DELETE` | `/posts/:id` | Delete a specific post by ID   |
 
-POST /auth/register → register a new user
+---
 
-POST /auth/login → login and get token
+## ▶️ Getting Started
 
-POST /auth/logout → logout (token blacklist)
+To run this project locally, clone the repository and follow these steps:
 
-Scripts
-
-npm start → start server
-
-npm run dev → start server with nodemo
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/04amanrajj/social-media.git
+    ```
+2.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
+3.  **Create a `.env` file:**
+    Copy the contents and fill in your database credentials and other necessary environment variables.
+    ```
+    PORT=3000
+    DATABASE_URL='postgresql://postgres:myPostgres@localhost:5432/postgres'
+    JWT_SECRET=...
+    JWT_EXPIRES_IN=...
+    ```
+4.  **Run the application:**
+    * **Development:**
+       ```sh
+       npm run dev
+       ```
+    * **Production:**
+       ```sh 
+       npm start
+       ```
+This will start the server, typically on `http://localhost:3000`
