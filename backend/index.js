@@ -19,6 +19,7 @@ app.get("/health", (req, res) => {
 });
 app.use("/api/user", require("./routes/user.route.js"));
 app.use("/api/profile", require("./routes/profile.route.js"));
+app.use("/api/post", require("./routes/post.route.js"));
 
 // Start server
 app.listen(port, () => {
