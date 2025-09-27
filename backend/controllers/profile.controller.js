@@ -1,6 +1,4 @@
 const db = require("../config/db");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 
 exports.getMe = async (req, res) => {
     try {
@@ -19,7 +17,6 @@ exports.getMe = async (req, res) => {
             bio: profile ? profile.bio : null,
             avatar_url: profile ? profile.avatar_url : null
         };
-        console.log(me)
         res.status(200).json({ me });
     } catch (error) {
         console.log({ error });
@@ -48,7 +45,6 @@ exports.getEveryone = async (req, res) => {
       delete merged.created_at;
       return merged;
     });
-    console.log(req.userId);
     res.status(200).json({ everyone });
   } catch (error) {
     console.log({ error });
