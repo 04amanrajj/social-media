@@ -24,6 +24,7 @@ exports.loginUser = async (req, res) => {
         .select("users.*")
         .first();
     }
+
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
@@ -32,9 +33,19 @@ exports.loginUser = async (req, res) => {
     if (!checkPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
+
+    const profile = await db("profiles").where({ user_id: user.id }).first();
+    user.name = profile?.name || null;
+    user.username = profile?.username || null;
+
     // Generate JWT
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      {
+        userId: user.id,
+        email: user.email,
+        name: user.name,
+        username: user.username,
+      },
       process.env.JWT_SECRET,
       { expiresIn: Number(process.env.JWT_EXPIRES_IN) || "24h" }
     );
@@ -77,7 +88,6 @@ exports.registerUser = async (req, res) => {
       updated_at: new Date(),
     };
     const [userId] = await db("users").insert(newUser).returning("id");
-    console.log({ userId });
     await db("profiles").insert({
       user_id: userId.id,
       username,
@@ -99,7 +109,7 @@ exports.logoutUser = async (req, res) => {
       return res.status(400).json({ message: "Token is required for logout" });
     }
     // Add the token to the blacklist
-    await db("token_blacklist").insert({ token, created_at: new Date() });
+    await db("blacklist_tokens").insert({ token, created_at: new Date() });
 
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {

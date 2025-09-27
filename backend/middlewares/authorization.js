@@ -11,12 +11,13 @@ exports.requireAuth = async (req, res, next) => {
         return res.status(401).json({ message: "Token missing" });
     }
     try {
-      const blacklistedToken = await db("blacklisted_tokens").where({ token }).first();
+      const blacklistedToken = await db("blacklist_tokens").where({ token }).first();
       if (blacklistedToken) {
         return res.status(401).json({ message: "Token has been revoked" });
       }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId; // Attach userId to request object
+        req.username=decoded.name;
         req.token=token;
     next();
   } catch (error) {
